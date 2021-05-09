@@ -5,10 +5,6 @@ class Biology(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["bd", "definebio"])
-    async def biodefine(self, ctx, word):
-        print("ok")
-
     @commands.command(aliases=["punnettsquare"])
     async def punnett(self, ctx, sequence):
         print("ok")

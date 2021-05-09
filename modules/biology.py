@@ -1,2 +1,2 @@
-def define():
+def punnett(sequence):
     print("ok")
