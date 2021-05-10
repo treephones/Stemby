@@ -8,6 +8,7 @@ class General(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["def", "d"])
+    @commands.cooldown(1, 2, commands.BucketType.user)
     async def define(self, ctx, *, word):
         if len(word.split(" ")) > 1:
             await ctx.send(embed=quick_embed("This feature only defines single word terms!"))
