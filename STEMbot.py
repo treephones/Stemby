@@ -38,7 +38,17 @@ def run():
                 except Exception:
                     print(f"Unable to load {file}!")
 
+    def initialize_caches():
+        try:
+            os.makedirs('../caches/punnett/')
+            print("Initialized caches!")
+        except FileExistsError:
+            print("Some cache directories already exist!")
+
+
     load_extensions()
+    initialize_caches()
+
     try:
         bot.run("ODQwNzAwODk1MjUxMDA1NDgx.YJcBuA.XLbtcZdjeCEMmJgXWk9Oe9Tga_4")
     except KeyboardInterrupt:

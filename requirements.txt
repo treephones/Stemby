@@ -2,3 +2,4 @@ discord.py==1.7.1
 beautifulsoup4
 requests
 PyDictionary
+matplotlib
