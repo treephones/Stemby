@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from random import randint
 from utils.scienceutils import sort_genotype
 
-def punnett(g1, g2, size):
+async def punnett(g1, g2, size):
     offspring = []
     if size == 2:
         x_labels, y_labels = [g1[0], g1[1]], [g2[0], g2[1]]
