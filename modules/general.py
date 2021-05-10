@@ -18,8 +18,7 @@ async def synonyms(word):
     ret = ""
     syns = PyDictionary.synonym(word)
     if syns is not None:
-        ret = f"Synonyms of **{word}**:\n\n"
-        ret += f"`{', '.join(syns)}"[0:2028-len(word)]+"`"
+        ret += f"Synonyms of **{word}**:\n\n`{', '.join(syns)}"[0:2028-len(word)]+"`"
     else:
         ret = "There are no synonyms for that word!"
     return ret

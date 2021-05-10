@@ -628,6 +628,52 @@
             222316
         ]
     },
+    "aluminum": {
+        "name": "Aluminium",
+        "appearance": "silvery gray metallic",
+        "atomic_mass": 26.98153857,
+        "boil": 2743,
+        "category": "post-transition metal",
+        "color": null,
+        "density": 2.7,
+        "discovered_by": null,
+        "melt": 933.47,
+        "molar_heat": 24.2,
+        "named_by": "Humphry Davy",
+        "number": 13,
+        "period": 3,
+        "phase": "Solid",
+        "source": "https://en.wikipedia.org/wiki/Aluminium",
+        "spectral_img": null,
+        "summary": "Aluminium (or aluminum; see different endings) is a chemical element in the boron group with symbol Al and atomic number 13. It is a silvery-white, soft, nonmagnetic, ductile metal. Aluminium is the third most abundant element (after oxygen and silicon), and the most abundant metal, in the Earth's crust.",
+        "symbol": "Al",
+        "xpos": 13,
+        "ypos": 3,
+        "shells": [
+            2,
+            8,
+            3
+        ],
+        "electron_configuration": "1s2 2s2 2p6 3s2 3p1",
+        "electron_configuration_semantic": "[Ne] 3s2 3p1",
+        "electron_affinity": 41.762,
+        "electronegativity_pauling": 1.61,
+        "ionization_energies": [
+            577.5,
+            1816.7,
+            2744.8,
+            11577,
+            14842,
+            18379,
+            23326,
+            27465,
+            31853,
+            38473,
+            42647,
+            201266,
+            222316
+        ]
+    },
     "silicon": {
         "name": "Silicon",
         "appearance": "crystalline, reflective with bluish-tinged faces",

@@ -35,7 +35,8 @@ def run():
                 try:
                     bot.load_extension(f"cogs.{file[:-3]}")
                     print(f"Loaded {file}!")
-                except Exception:
+                except Exception as e:
+                    print(e)
                     print(f"Unable to load {file}!")
 
     def initialize_caches():
