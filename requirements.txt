@@ -3,3 +3,4 @@ beautifulsoup4
 requests
 PyDictionary
 matplotlib
+sympy
