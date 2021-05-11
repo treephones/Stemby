@@ -51,7 +51,7 @@ def run():
     initialize_caches()
 
     try:
-        bot.run("ODQwNzAwODk1MjUxMDA1NDgx.YJcBuA.XLbtcZdjeCEMmJgXWk9Oe9Tga_4")
+        bot.run(os.environ['TOKEN'])
     except KeyboardInterrupt:
         bot.logout()
 
