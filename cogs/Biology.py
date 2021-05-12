@@ -10,7 +10,7 @@ class Biology(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["punnettsquare", "ps"])
-    @commands.cooldown(1, 10, commands.BucketType.user)
+    @commands.cooldown(1, 5, commands.BucketType.user)
     async def punnett(self, ctx, genotype1, genotype2):
         if len(genotype1) == len(genotype2):
             if len(genotype1) == 2 or len(genotype1) == 4:

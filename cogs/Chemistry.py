@@ -11,6 +11,7 @@ class Chemistry(commands.Cog):
             self.chem = ChemistryFunctions(json.load(file))
 
     @commands.command(aliases=["property", "prop"])
+    @commands.cooldown(1, 3, commands.BucketType.user)
     async def properties(self, ctx, element, *, property="all"):
         element, property = element.lower(), property.lower().strip().replace(" ", "_")
         if 0 < len(element) <= 2:

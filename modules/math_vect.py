@@ -1,5 +1,5 @@
 import numpy as np
-from fractions import Fraction
+from utils.mathutils import as_fraction
 
 def dot_product(a,b):
     a = np.array(a)
@@ -34,5 +34,5 @@ def ortho_proj(a,b): #orthogonal projection of b onto a
     denominator = a.dot(a)
 
     proj = (numerator/denominator)*a
-    output = [str(Fraction(proj[i]).limit_denominator()) for i in range(len(proj))]
+    output = [str(as_fraction(proj[i])) for i in range(len(proj))]
     return output
