@@ -46,7 +46,6 @@ def run():
         except FileExistsError:
             print("Some cache directories already exist!")
 
-
     load_extensions()
     initialize_caches()
 

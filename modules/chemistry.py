@@ -1,4 +1,3 @@
-
 class ChemistryFunctions():
 
     def __init__(self, pt: dict):
