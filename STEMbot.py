@@ -6,6 +6,9 @@ class STEMbot(commands.Bot):
     def __init__(self, **kwargs):
         super().__init__(
             command_prefix=kwargs.get("command_prefix"),
+            status=kwargs.get("status"),
+            activity=kwargs.get("activity"),
+            help_command=kwargs.get("help_command")
         )
         self.app_info = None
 
@@ -26,6 +29,8 @@ class STEMbot(commands.Bot):
 def run():
     bot = STEMbot(
         command_prefix=",",
+        status=discord.Status.online,
+        activity=discord.Activity(type=discord.ActivityType.listening, name=',help'),
         help_command=None
     )
 
