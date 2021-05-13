@@ -82,18 +82,6 @@ class Math_vectors(commands.Cog):
         except VectorInputFormatException as e:
             await ctx.send(embed=quick_embed(e.message))
 
-    @commands.command(aliases=["vsubtract", "vsub", "difference", "vdifference", "vdiff", "diff"])
-    @commands.cooldown(1, 2, commands.BucketType.user)
-    async def subtract(self, ctx, *, vecs):
-        try:
-            vecs = clean_input(vecs)
-            await ctx.send(embed=quick_embed(
-                f"The difference of the vectors\n `{vecs[0]}` and `{vecs[1]}` is:\n\n"
-                f"**{math_vect.subtraction(vecs[0], vecs[1])}**"
-            ))
-        except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message))
-
     @commands.command(aliases=["ortho"])
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def orthogonal(self, ctx, *, vecs):
