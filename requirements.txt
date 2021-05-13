@@ -4,3 +4,5 @@ requests
 PyDictionary
 matplotlib
 sympy
+quantities
+quantulum3

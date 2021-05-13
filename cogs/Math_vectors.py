@@ -58,7 +58,7 @@ class Math_vectors(commands.Cog):
         except VectorInputFormatException as e:
             await ctx.send(embed=quick_embed(e.message))
 
-    @commands.command(aliases=["vadd", "vsum", "sum"])
+    @commands.command(aliases=["vadd", "vsum", "sum", "addition"])
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def add(self, ctx, *, vecs):
         try:
