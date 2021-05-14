@@ -1,7 +1,11 @@
 import math
-from quantulum3 import parser
+import re
+import numpy as np
 import quantities as q
-from simpleeval import simple_eval, NumberTooHigh, InvalidExpression, FunctionNotDefined
+from quantulum3 import parser
+import matplotlib.pyplot as plt
+from simpleeval import simple_eval, NumberTooHigh, InvalidExpression
+from utils.cache import gen_cache_name
 from utils.mathutils import get_units
 
 async def convert(fro, to):
@@ -53,3 +57,32 @@ async def evaluate(expression):
     except Exception:
         ret = "Something went wrong!"
     return ret
+
+whitelist = ["sin", "cos", "tan", "sqrt", "x"]
+replace = {
+    "sin": "math.sin",
+    "cos": "math.cos",
+    "tan": "math.tan",
+    "sqrt": "math.sqrt",
+    "^": "**"
+}
+
+def graph(expression):
+    for word in re.findall('[a-zA-Z_]+', expression):
+        if word not in whitelist:
+            return f"Something went wrong! `{word}` cannot be used in an expression!"
+    for fro, to in replace.items():
+        expression.replace(fro, to)
+    def f(x):
+        return eval(expression)
+    x = np.linspace(100, 100, 250)
+    plt.plot(x, f(x))
+    plt.xlim(100, 100)
+
+    im_id = "test"#gen_cache_name()
+    path = f'../caches/graphs/{im_id}.png'
+    plt.savefig(path, bbox_inches='tight', pad_inches=0.5)
+    plt.close()
+    return path
+
+print(graph("x**2"))
