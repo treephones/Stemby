@@ -68,4 +68,5 @@ def graph(expression):
     plot.save(path)
     return path
 
-print(graph("y = tan(x)"))
+if __name__ == "__main__":
+    print(graph("y = tan(x)"))
