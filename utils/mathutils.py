@@ -1,5 +1,6 @@
-from fractions import Fraction
+import math
 from re import split
+from fractions import Fraction
 
 def remove_all(list, vals):
     return [elem for elem in list if elem not in vals]
@@ -16,6 +17,6 @@ def quadratic(a, b, c):
     if disc < 0:
         return None
     elif disc == 0:
-        return -b/(2*a*c)
+        return -b/(2*a)
     else:
-        return (((-b+disc)/(2*a*c)),((-b-disc)/(2*a*c)))
+        return (((-b+math.sqrt(disc))/(2*a)),((-b-math.sqrt(disc))/(2*a)))
