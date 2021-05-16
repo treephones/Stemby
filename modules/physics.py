@@ -2,11 +2,11 @@ import math
 from utils.mathutils import quadratic
 
 to_name = {
-    "a": "acceleration",
-    "d": "displacement",
-    "t": "time",
-    "v1": "initial velocity",
-    "v2": "final velocity"
+    "a": "Acceleration",
+    "d": "Displacement",
+    "t": "Time",
+    "v1": "Initial Velocity",
+    "v2": "Final Velocity"
 }
 
 big5s = {
@@ -44,12 +44,15 @@ big5s = {
 
 def kinematics(vars, find, pairs):
     try:
-        ret = big5s[vars][find](pairs[0], pairs[1], pairs[2])
+        ans = big5s[vars][find](pairs[0], pairs[1], pairs[2])
+        if ans == None:
+            raise ValueError
+        ret = f"{to_name[find]}: {round(ans, 2)}"
     except KeyError:
         ret = "One or more of the motion variables was not valid! \n NOTE: " \
               "```\nAcceleration = a\nDisplacement = d\nTime = t\nInitial Velocity = v1\nFinal Velocity = v2\n```"
     except ValueError:
-        ret = "You cannot have a negative acceleration or displacement with a positive initial or final velocity!"
+        ret = "Unable to perform that calculation!"
     return ret
 
 if __name__ == "__main__":
