@@ -24,7 +24,7 @@ class Utility(commands.Cog):
             bs = "\n"
             await ctx.send(embed=quick_embed(f"The aliases for the `{command}` command are:\n\n {bs.join(aliases)}"))
         except Exception:
-            await ctx.send(embed=quick_embed(f"`{command}` is not a command!"))
+            await ctx.send(embed=quick_embed(f"`{command}` is not a command!", False))
 
 
 def setup(bot):

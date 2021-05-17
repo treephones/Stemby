@@ -44,7 +44,7 @@ class Math_vectors(commands.Cog):
                 f"**{math_vect.dot_product(vecs[0], vecs[1])}**"
             ))
         except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message))
+            await ctx.send(embed=quick_embed(e.message, False))
 
     @commands.command(aliases=["vproduct", "vectorproduct", "vmultiply"])
     @commands.cooldown(1, 2, commands.BucketType.user)
@@ -56,7 +56,7 @@ class Math_vectors(commands.Cog):
                 f"**{math_vect.multiply(vecs[0], vecs[1])}**"
             ))
         except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message))
+            await ctx.send(embed=quick_embed(e.message, False))
 
     @commands.command(aliases=["vadd", "vsum", "sum", "addition"])
     @commands.cooldown(1, 2, commands.BucketType.user)
@@ -68,7 +68,7 @@ class Math_vectors(commands.Cog):
                 f"**{math_vect.addition(vecs[0], vecs[1])}**"
             ))
         except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message))
+            await ctx.send(embed=quick_embed(e.message, False))
 
     @commands.command(aliases=["vsubtract", "vsub", "difference", "vdifference", "vdiff", "diff"])
     @commands.cooldown(1, 2, commands.BucketType.user)
@@ -80,7 +80,7 @@ class Math_vectors(commands.Cog):
                 f"**{math_vect.subtraction(vecs[0], vecs[1])}**"
             ))
         except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message))
+            await ctx.send(embed=quick_embed(e.message, False))
 
     @commands.command(aliases=["ortho"])
     @commands.cooldown(1, 2, commands.BucketType.user)
@@ -92,7 +92,7 @@ class Math_vectors(commands.Cog):
                 f"**{'ARE' if math_vect.is_orthogonal(vecs[0], vecs[1]) else 'ARE NOT'}** orthogonal."
             ))
         except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message))
+            await ctx.send(embed=quick_embed(e.message, False))
 
 def setup(bot):
     bot.add_cog(Math_vectors(bot))

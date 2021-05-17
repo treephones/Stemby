@@ -11,8 +11,8 @@ async def define(word):
                 ret += f"   {i+1}. `{definition}`\n"
             ret += "\n"
     else:
-        ret = f"The word `{word}` does not exist!"
-    return ret
+        return (f"The word `{word}` does not exist!", False)
+    return (ret, True)
 
 async def synonyms(word):
     ret = ""
@@ -20,5 +20,5 @@ async def synonyms(word):
     if syns is not None:
         ret += f"Synonyms of **{word}**:\n\n`{', '.join(syns)}"[0:2028-len(word)]+"`"
     else:
-        ret = "There are no synonyms for that word!"
-    return ret
+        return ("There are no synonyms for that word!", False)
+    return (ret, True)

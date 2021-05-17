@@ -49,11 +49,11 @@ def kinematics(vars, find, pairs):
             raise ValueError
         ret = f"{to_name[find]}: {round(ans, 2)}"
     except KeyError:
-        ret = "One or more of the motion variables was not valid! \n NOTE: " \
-              "```\nAcceleration = a\nDisplacement = d\nTime = t\nInitial Velocity = v1\nFinal Velocity = v2\n```"
+        return ("One or more of the motion variables was not valid! \n NOTE: " \
+              "```\nAcceleration = a\nDisplacement = d\nTime = t\nInitial Velocity = v1\nFinal Velocity = v2\n```", False)
     except ValueError:
-        ret = "Unable to perform that calculation!"
-    return ret
+        return ("Unable to perform that calculation!", False)
+    return (ret, True)
 
 if __name__ == "__main__":
     print(big5s["a d t v2"]["d"](3,5,12))

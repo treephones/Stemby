@@ -21,14 +21,14 @@ async def convert(fro, to):
         quant.units = to
         ret = f"{' '.join(fro)} -> {quant}"
     except IndexError:
-        ret = "Something went wrong! Check spelling and only use the actual word or official short form when writing units."
+        return ("Something went wrong! Check spelling and only use the actual word or official short form when writing units.", False)
     except ValueError:
-        ret = f"Something went wrong! Cannot convert between the units `{fro[1]}` and `{to}`!"
+        return (f"Something went wrong! Cannot convert between the units `{fro[1]}` and `{to}`!", False)
     except LookupError:
-        ret = f"One of `{fro[1]}` or `{to}` are spelled incorrectly or do not exist! \n **NOTE**: Do not make short forms plural (ex, use \"sec\" rather than \"secs\" ;) )!"
+        return (f"One of `{fro[1]}` or `{to}` are spelled incorrectly or do not exist! \n **NOTE**: Do not make short forms plural (ex, use \"sec\" rather than \"secs\" ;) )!", False)
     except Exception:
-        ret = "Something went wrong!"
-    return ret
+        return ("Something went wrong!", False)
+    return (ret, True)
 
 functions = {"log": lambda x: math.log(x),
                  "ln": lambda x: math.log(x, math.e),
@@ -51,12 +51,12 @@ async def evaluate(expression):
               f"{simple_eval(clean_expression, functions=functions)}" \
               f"```"
     except NumberTooHigh:
-        ret = "Something went wrong! That number is too large to evaluate!"
+        return ("Something went wrong! That number is too large to evaluate!", False)
     except InvalidExpression:
-        ret = "Something went wrong! That is an invalid expression!"
+        return ("Something went wrong! That is an invalid expression!", False)
     except Exception:
-        ret = "Something went wrong!"
-    return ret
+        return ("Something went wrong!", False)
+    return (ret, True)
 
 def graph(expression):
     l, r = expression.replace("^", "**").split("=")

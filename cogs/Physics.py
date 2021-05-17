@@ -14,13 +14,13 @@ class Physics(commands.Cog):
         try:
             args = [tuple([arg.split("=")[0].lower(), float(arg.split("=")[1])]) for arg in [arg1, arg2, arg3]]
         except Exception:
-            await ctx.send(embed=quick_embed("Something went wrong! Check the input formatting!"))
+            await ctx.send(embed=quick_embed("Something went wrong! Check the input formatting!", False))
             return
         vars = [arg[0] for arg in args]
         vars.append(find)
         vars = sorted(vars)
         if vars != sorted(list(set(vars))):
-            await ctx.send(embed=quick_embed("You can only enter a variable once!"))
+            await ctx.send(embed=quick_embed("You can only enter a variable once!", False))
             return
         given = " ".join(vars)
         vars.remove(find)
@@ -31,7 +31,7 @@ class Physics(commands.Cog):
                     pairs.append(arg[1])
                     break
         ans = physics.kinematics(given, find, pairs)
-        await ctx.send(embed=quick_embed(ans))
+        await ctx.send(embed=quick_embed(ans[0], ans[1]))
 
 def setup(bot):
     bot.add_cog(Physics(bot))

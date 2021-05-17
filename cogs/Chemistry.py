@@ -21,16 +21,16 @@ class Chemistry(commands.Cog):
             try:
                 await ctx.send(embed=quick_embed(self.chem.format_all_properties(self.chem.get_all_properties(element))))
             except KeyError:
-                await ctx.send(embed=quick_embed("That element does not exist! Enter the name or symbol of a valid element."))
+                await ctx.send(embed=quick_embed("That element does not exist! Enter the name or symbol of a valid element.", False))
         else:
             try:
                 elem_properties = self.chem.get_all_properties(element)
                 try:
                     await ctx.send(embed=quick_embed(self.chem.format_property(elem_properties, property)))
                 except KeyError:
-                    await ctx.send(embed=quick_embed("That property does not exist. Might be spelling?"))
+                    await ctx.send(embed=quick_embed("That property does not exist. Might be spelling?", False))
             except KeyError:
-                await ctx.send(embed=quick_embed("That element does not exist! Enter the name or symbol of a valid element."))
+                await ctx.send(embed=quick_embed("That element does not exist! Enter the name or symbol of a valid element.", False))
 
     @commands.command(aliases=["molmass"])
     @commands.cooldown(1, 3, commands.BucketType.user)
