@@ -7,3 +7,5 @@ sympy
 quantities
 quantulum3
 simpleeval
+molmass
+chempy

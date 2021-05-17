@@ -1,3 +1,5 @@
+from molmass import Formula, FormulaError
+
 class ChemistryFunctions():
 
     def __init__(self, pt: dict):
@@ -22,3 +24,19 @@ class ChemistryFunctions():
         for prop in element.keys():
             ret += self.format_property(element, prop, True)
         return ret
+
+    def mass(self, compound):
+        try:
+            f = Formula(compound)
+            ret = f"Mass for **{compound}**:\n```js\n"
+            for elem in f.composition():
+                ret += f"{elem[0]} x {elem[1]} = {round(elem[2], 2)}\n\n"
+            ret += f"Total: {round(f.mass, 2)} g/mol\n```"
+        except FormulaError:
+            ret = (f"Something went wrong! `{compound}` is not a valid formula!\nNOTE: Use the chemical symbols when entering formula. (ex Hydrogen = H NOT h)", False)
+        return (ret, True)
+
+if __name__ == "__main__":
+    c = ChemistryFunctions({})
+    print(c.mass("H2O"))
+

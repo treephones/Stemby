@@ -32,5 +32,10 @@ class Chemistry(commands.Cog):
             except KeyError:
                 await ctx.send(embed=quick_embed("That element does not exist! Enter the name or symbol of a valid element."))
 
+    @commands.command(aliases=["molmass"])
+    @commands.cooldown(1, 3, commands.BucketType.user)
+    async def mass(self, ctx, compound):
+        await ctx.send(embed=quick_embed(self.chem.mass(compound)))
+
 def setup(bot):
     bot.add_cog(Chemistry(bot))
