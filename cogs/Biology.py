@@ -14,7 +14,7 @@ class Biology(commands.Cog):
     async def punnett(self, ctx, genotype1, genotype2):
         if len(genotype1) == len(genotype2):
             if len(genotype1) == 2 or len(genotype1) == 4:
-                path = await biology.punnett(genotype1, genotype2, len(genotype1))
+                path = await biology.punnett(genotype1, genotype2, len(genotype1), ctx.author.display_name)
                 await ctx.send(file=File(path))
                 os.remove(path)
                 return
