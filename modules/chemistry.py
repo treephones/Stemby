@@ -33,7 +33,7 @@ class ChemistryFunctions():
                 ret += f"{elem[0]} x {elem[1]} = {round(elem[2], 2)}\n\n"
             ret += f"Total: {round(f.mass, 2)} g/mol\n```"
         except FormulaError:
-            ret = (f"Something went wrong! `{compound}` is not a valid formula!\nNOTE: Use the chemical symbols when entering formula. (ex Hydrogen = H NOT h)", False)
+            return (f"Something went wrong! `{compound}` is not a valid formula!\nNOTE: Use the chemical symbols when entering formula. (ex Hydrogen = H NOT h)", False)
         return (ret, True)
 
 if __name__ == "__main__":

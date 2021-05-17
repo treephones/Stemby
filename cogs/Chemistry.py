@@ -35,7 +35,8 @@ class Chemistry(commands.Cog):
     @commands.command(aliases=["molmass"])
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def mass(self, ctx, compound):
-        await ctx.send(embed=quick_embed(self.chem.mass(compound)))
+        ans = self.chem.mass(compound)
+        await ctx.send(embed=quick_embed(ans[0], success=ans[1]))
 
 def setup(bot):
     bot.add_cog(Chemistry(bot))
