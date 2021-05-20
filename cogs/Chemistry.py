@@ -38,5 +38,19 @@ class Chemistry(commands.Cog):
         ans = self.chem.mass(compound)
         await ctx.send(embed=quick_embed(ans[0], success=ans[1]))
 
+    @commands.command(aliases=[])
+    @commands.cooldown(1, 3, commands.BucketType.user)
+    async def balance(self, ctx, *, reaction):
+        reaction = reaction.replace(" ", "")
+        sides = reaction.split("->") if "->" in reaction else reaction.split("=")
+        if len(sides) != 2:
+            await ctx.send(embed=quick_embed("The equation was formatted incorrectly! Seperate sides with \'->\' or \'=\'!", False))
+            return
+        compounds = {}
+        compounds["reacs"] = sides[0].split("+")
+        compounds["prods"] = sides[1].split("+")
+        ans = self.chem.balance(compounds)
+        await ctx.send(embed=quick_embed(ans[0], ans[1]))
+
 def setup(bot):
     bot.add_cog(Chemistry(bot))

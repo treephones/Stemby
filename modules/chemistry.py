@@ -1,3 +1,4 @@
+from chempy import balance_stoichiometry as b
 from molmass import Formula, FormulaError
 
 class ChemistryFunctions():
@@ -36,7 +37,24 @@ class ChemistryFunctions():
             return (f"Something went wrong! `{compound}` is not a valid formula!\nNOTE: Use the chemical symbols when entering formula. (ex Hydrogen = H NOT h)", False)
         return (ret, True)
 
+    def balance(self, compounds):
+        try:
+            reacs, prods = b(compounds["reacs"], compounds["prods"])
+            ret = "**Balanced Equation**:\n```julia\n"
+            for reac in reacs:
+                ret += f"({reacs[reac]}){reac} + "
+            ret = ret[:-2]
+            ret += "-> "
+            for prod in prods:
+                ret += f"({prods[prod]}){prod} + "
+            ret = ret[:-2]
+            ret += "\n```"
+            return (ret, True)
+        except Exception:
+            ret = "Something went wrong! Couldn't parse equation! Make sure all compounds are correct and seperated by a +."
+            return (ret, False)
+
 if __name__ == "__main__":
     c = ChemistryFunctions({})
-    print(c.mass("H2O"))
+    c.balance("a + v -> 3 + 2")
 
