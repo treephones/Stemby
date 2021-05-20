@@ -47,7 +47,7 @@ def kinematics(vars, find, pairs):
         ans = big5s[vars][find](pairs[0], pairs[1], pairs[2])
         if ans == None:
             raise ValueError
-        ret = f"{to_name[find]}: {round(ans, 2)}"
+        ret = f"{to_name[find]}: {round(ans, 2)}" #CRASHES WHEN PASSED TUPLE!!
     except KeyError:
         return ("One or more of the motion variables was not valid! \n NOTE: " \
               "```\nAcceleration = a\nDisplacement = d\nTime = t\nInitial Velocity = v1\nFinal Velocity = v2\n```", False)

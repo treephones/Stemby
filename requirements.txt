@@ -9,3 +9,4 @@ quantulum3
 simpleeval
 molmass
 chempy
+opencv-python
