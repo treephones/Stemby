@@ -19,24 +19,24 @@ class Chemistry(commands.Cog):
 
         if property == "all":
             try:
-                await ctx.send(embed=quick_embed(self.chem.format_all_properties(self.chem.get_all_properties(element))))
+                await ctx.send(embed=quick_embed(ctx, self.chem.format_all_properties(self.chem.get_all_properties(element))))
             except KeyError:
-                await ctx.send(embed=quick_embed("That element does not exist! Enter the name or symbol of a valid element.", False))
+                await ctx.send(embed=quick_embed(ctx, "That element does not exist! Enter the name or symbol of a valid element.", False))
         else:
             try:
                 elem_properties = self.chem.get_all_properties(element)
                 try:
-                    await ctx.send(embed=quick_embed(self.chem.format_property(elem_properties, property)))
+                    await ctx.send(embed=quick_embed(ctx, self.chem.format_property(elem_properties, property)))
                 except KeyError:
-                    await ctx.send(embed=quick_embed("That property does not exist. Might be spelling?", False))
+                    await ctx.send(embed=quick_embed(ctx, "That property does not exist. Might be spelling?", False))
             except KeyError:
-                await ctx.send(embed=quick_embed("That element does not exist! Enter the name or symbol of a valid element.", False))
+                await ctx.send(embed=quick_embed(ctx, "That element does not exist! Enter the name or symbol of a valid element.", False))
 
     @commands.command(aliases=["molmass"])
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def mass(self, ctx, compound):
         ans = self.chem.mass(compound)
-        await ctx.send(embed=quick_embed(ans[0], success=ans[1]))
+        await ctx.send(embed=quick_embed(ctx, ans[0], success=ans[1]))
 
     @commands.command(aliases=[])
     @commands.cooldown(1, 3, commands.BucketType.user)
@@ -44,13 +44,13 @@ class Chemistry(commands.Cog):
         reaction = reaction.replace(" ", "")
         sides = reaction.split("->") if "->" in reaction else reaction.split("=")
         if len(sides) != 2:
-            await ctx.send(embed=quick_embed("The equation was formatted incorrectly! Seperate sides with \'->\' or \'=\'!", False))
+            await ctx.send(embed=quick_embed(ctx, "The equation was formatted incorrectly! Seperate sides with \'->\' or \'=\'!", False))
             return
         compounds = {}
         compounds["reacs"] = sides[0].split("+")
         compounds["prods"] = sides[1].split("+")
         ans = self.chem.balance(compounds)
-        await ctx.send(embed=quick_embed(ans[0], ans[1]))
+        await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
 
 def setup(bot):
     bot.add_cog(Chemistry(bot))

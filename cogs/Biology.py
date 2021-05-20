@@ -18,9 +18,9 @@ class Biology(commands.Cog):
                 await ctx.send(file=File(path))
                 os.remove(path)
                 return
-            await ctx.send(embed=quick_embed("Something went wrong! Only do 2x2 or 4x4 punnett squares!", False))
+            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Only do 2x2 or 4x4 punnett squares!", False))
             return
-        await ctx.send(embed=quick_embed("Something went wrong! Both genotypes must have the same number of alleles!", False))
+        await ctx.send(embed=quick_embed(ctx, "Something went wrong! Both genotypes must have the same number of alleles!", False))
 
 def setup(bot):
     bot.add_cog(Biology(bot))

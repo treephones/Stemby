@@ -39,60 +39,60 @@ class Math_vectors(commands.Cog):
     async def dot(self, ctx, *, vecs):
         try:
             vecs = clean_input(vecs)
-            await ctx.send(embed=quick_embed(
+            await ctx.send(embed=quick_embed(ctx,
                 f"The dot product of the vectors\n `{vecs[0]}` and `{vecs[1]}` is:\n\n"
                 f"**{math_vect.dot_product(vecs[0], vecs[1])}**"
             ))
         except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message, False))
+            await ctx.send(embed=quick_embed(ctx, e.message, False))
 
     @commands.command(aliases=["vproduct", "vectorproduct", "vmultiply"])
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def product(self, ctx, *, vecs):
         try:
             vecs = clean_input(vecs)
-            await ctx.send(embed=quick_embed(
+            await ctx.send(embed=quick_embed(ctx,
                 f"The product of the vectors\n `{vecs[0]}` and `{vecs[1]}` is:\n\n"
                 f"**{math_vect.multiply(vecs[0], vecs[1])}**"
             ))
         except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message, False))
+            await ctx.send(embed=quick_embed(ctx, e.message, False))
 
     @commands.command(aliases=["vadd", "vsum", "sum", "addition"])
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def add(self, ctx, *, vecs):
         try:
             vecs = clean_input(vecs)
-            await ctx.send(embed=quick_embed(
+            await ctx.send(embed=quick_embed(ctx,
                 f"The sum of the vectors\n `{vecs[0]}` and `{vecs[1]}` is:\n\n"
                 f"**{math_vect.addition(vecs[0], vecs[1])}**"
             ))
         except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message, False))
+            await ctx.send(embed=quick_embed(ctx, e.message, False))
 
     @commands.command(aliases=["vsubtract", "vsub", "difference", "vdifference", "vdiff", "diff"])
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def subtract(self, ctx, *, vecs):
         try:
             vecs = clean_input(vecs)
-            await ctx.send(embed=quick_embed(
+            await ctx.send(embed=quick_embed(ctx,
                 f"The difference of the vectors\n `{vecs[0]}` and `{vecs[1]}` is:\n\n"
                 f"**{math_vect.subtraction(vecs[0], vecs[1])}**"
             ))
         except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message, False))
+            await ctx.send(embed=quick_embed(ctx, e.message, False))
 
     @commands.command(aliases=["ortho"])
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def orthogonal(self, ctx, *, vecs):
         try:
             vecs = clean_input(vecs)
-            await ctx.send(embed=quick_embed(
+            await ctx.send(embed=quick_embed(ctx,
                 f"The vectors `{vecs[0]}` and `{vecs[1]}` "
                 f"**{'ARE' if math_vect.is_orthogonal(vecs[0], vecs[1]) else 'ARE NOT'}** orthogonal."
             ))
         except VectorInputFormatException as e:
-            await ctx.send(embed=quick_embed(e.message, False))
+            await ctx.send(embed=quick_embed(ctx, e.message, False))
 
 def setup(bot):
     bot.add_cog(Math_vectors(bot))

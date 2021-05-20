@@ -11,19 +11,19 @@ class General(commands.Cog):
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def define(self, ctx, *, word):
         if len(word.split()) > 1:
-            await ctx.send(embed=quick_embed("This feature only defines single word terms!", False))
+            await ctx.send(embed=quick_embed(ctx, "This feature only defines single word terms!", False))
         else:
             ans = await general.define(word)
-            await ctx.send(embed=quick_embed(ans[0], ans[1]))
+            await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
 
     @commands.command(aliases=["syn", "synonyms"])
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def synonym(self, ctx, *, word):
         if len(word.split()) > 1:
-            await ctx.send(embed=quick_embed("This feature only gets synonyms for single word terms!", False))
+            await ctx.send(embed=quick_embed(ctx, "This feature only gets synonyms for single word terms!", False))
         else:
             ans = await general.synonyms(word)
-            await ctx.send(embed=quick_embed(ans[0], ans[1]))
+            await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
 
 def setup(bot):
     bot.add_cog(General(bot))

@@ -14,7 +14,7 @@ class Utility(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 5, commands.BucketType.channel)
     async def ping(self, ctx):
-        await ctx.send(embed=quick_embed(f"STEMbot's latency is **{round(self.bot.latency * 1000)}ms**!"))
+        await ctx.send(embed=quick_embed(ctx, f"STEMbot's latency is **{round(self.bot.latency * 1000)}ms**!"))
 
     @commands.command(aliases=["alias"])
     @commands.cooldown(1, 5, commands.BucketType.channel)
@@ -22,9 +22,9 @@ class Utility(commands.Cog):
         try:
             aliases = commands.Bot.get_command(self.bot, command).aliases
             bs = "\n"
-            await ctx.send(embed=quick_embed(f"The aliases for the `{command}` command are:\n\n {bs.join(aliases)}"))
+            await ctx.send(embed=quick_embed(ctx, f"The aliases for the `{command}` command are:\n\n {bs.join(aliases)}"))
         except Exception:
-            await ctx.send(embed=quick_embed(f"`{command}` is not a command!", False))
+            await ctx.send(embed=quick_embed(ctx, f"`{command}` is not a command!", False))
 
 
 def setup(bot):
