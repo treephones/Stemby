@@ -10,7 +10,7 @@ class Memes(commands.Cog):
     @commands.command()
     @commands.cooldown(2, 15, commands.BucketType.channel)
     async def pepe(self, ctx):
-        path = save_attachment(ctx)
+        path = await save_attachment(ctx)
 
 def setup(bot):
     bot.add_cog(Memes(bot))
