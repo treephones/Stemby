@@ -1,5 +1,5 @@
 import math
-import os
+import re
 from sympy.plotting import plot_implicit
 from sympy.parsing.sympy_parser import parse_expr
 import quantities as q
@@ -43,7 +43,9 @@ functions = {"log": lambda x: math.log(x),
 
 async def evaluate(expression):
     ret = "Evaluated expression:"
-    clean_expression = expression.replace("^", "**").replace("pi", str(math.pi)).replace("e", str(math.e))
+    clean_expression = expression.replace("^", "**").replace("pi", str(math.pi)).replace("e", str(math.e)).replace(" ", "")
+    for i in re.findall("[^=]=[^=]", clean_expression):
+        clean_expression = clean_expression.replace(i, f"{i[0]}=={i[-1]}")
     try:
         ret += f"```python\n" \
               f"{expression}\n\n" \
