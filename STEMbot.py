@@ -48,6 +48,7 @@ def run():
         try:
             os.makedirs('./caches/punnett/')
             os.makedirs('./caches/graphs/')
+            os.makedirs('./caches/facereplace/')
             print("Initialized caches!")
         except FileExistsError:
             print("Some cache directories already exist!")
