@@ -52,8 +52,7 @@ class Math_vectors(commands.Cog):
         try:
             vecs = clean_input(vecs)
             await ctx.send(embed=quick_embed(ctx,
-                f"The product of the vectors\n `{vecs[0]}` and `{vecs[1]}` is:\n\n"
-                f"**{math_vect.multiply(vecs[0], vecs[1])}**"
+                f"Calculated Product:\n ```python\n{vecs[0]} \n\n*\n\n{vecs[1]} \n\n= \n\n{math_vect.multiply(vecs[0], vecs[1])}\n```"
             ))
         except VectorInputFormatException as e:
             await ctx.send(embed=quick_embed(ctx, e.message, False))
@@ -64,8 +63,7 @@ class Math_vectors(commands.Cog):
         try:
             vecs = clean_input(vecs)
             await ctx.send(embed=quick_embed(ctx,
-                f"The sum of the vectors\n `{vecs[0]}` and `{vecs[1]}` is:\n\n"
-                f"**{math_vect.addition(vecs[0], vecs[1])}**"
+                f"Calculated Sum:\n ```python\n{vecs[0]} \n\n+\n\n{vecs[1]} \n\n= \n\n{math_vect.addition(vecs[0], vecs[1])}\n```"
             ))
         except VectorInputFormatException as e:
             await ctx.send(embed=quick_embed(ctx, e.message, False))
@@ -76,8 +74,7 @@ class Math_vectors(commands.Cog):
         try:
             vecs = clean_input(vecs)
             await ctx.send(embed=quick_embed(ctx,
-                f"The difference of the vectors\n `{vecs[0]}` and `{vecs[1]}` is:\n\n"
-                f"**{math_vect.subtraction(vecs[0], vecs[1])}**"
+                f"Calculated Difference:\n ```python\n{vecs[0]} \n\n-\n\n{vecs[1]} \n\n= \n\n{math_vect.subtraction(vecs[0], vecs[1])}\n```"
             ))
         except VectorInputFormatException as e:
             await ctx.send(embed=quick_embed(ctx, e.message, False))
