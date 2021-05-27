@@ -1,7 +1,6 @@
-from urllib.request import urlopen, Request
-from bs4 import BeautifulSoup, SoupStrainer
 from random import choice
 from statics.quiz_topics import topics
+from utils.webscrapingutils import get_page_soup
 
 flashcard_link_id = "https://quizlet.com/gb/"
 
@@ -24,11 +23,9 @@ def get_topic_link(topic):
     return None
 
 def get_quiz(topic_link):
-    request = Request(topic_link, headers={'User-Agent': 'Mozilla/5.0'})
-    page_content = urlopen(request)
-    bs = BeautifulSoup(page_content, "html.parser", from_encoding=page_content.info().get_param('charset'))
+    bs = get_page_soup(topic_link)
     links = [link["href"] for link in bs.find_all("a", href=True) if flashcard_link_id in link["href"]]
     return choice(links)
 
 def get_question(quiz_link):
-    pass
+    bs = get_page_soup(quiz_link)

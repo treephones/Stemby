@@ -1,7 +1,7 @@
 from statics.quiz_topics import topics
 from modules.quiz import get_topic_link, get_quiz
 
-print(get_quiz(get_topic_link("music")))
+print(get_quiz(get_topic_link("neurology")))
 
 # for key in topics.keys():
 #     for subkey in topics[key].keys():
