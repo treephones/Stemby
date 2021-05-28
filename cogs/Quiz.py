@@ -1,3 +1,4 @@
+import asyncio
 from discord.ext import commands
 from random import choice
 from modules import quiz
@@ -18,7 +19,21 @@ class Quiz(commands.Cog):
         def check(reaction, user):
             return user == ctx.message.author and str(reaction.emoji) == '👀'
 
-        embed = quick_embed(f"Question for `{topic}`:")
+        txt = f"\n\n"\
+              f"{question}\n\n**Answer**: \nReact with the 👀 emote to show the answer!"\
+              f"\n\nFlashcard fetched from: \n[{link}]({link})"
+        ans_txt = f"\n\n" \
+              f"{question}\n\n**Answer**: \n```\n{answer}\n```" \
+              f"\n\nFlashcard fetched from: \n[{link}]({link})"
+
+        msg = await ctx.send(embed=quick_embed(ctx, txt, title=f"**Flashcard for `{topic}`**:"))
+        await msg.add_reaction('👀')
+        try:
+            await self.bot.wait_for("reaction_add", timeout=60.0, check=check)
+            await msg.edit(embed=quick_embed(ctx, ans_txt, title=f"**Flashcard for `{topic}`**:"))
+        except asyncio.TimeoutError:
+            await ctx.send(embed=quick_embed(ctx, f"Did not answer flashcard in time! Answer is: \n```\n{answer}\n```", False))
+            return
 
 def setup(bot):
     bot.add_cog(Quiz(bot))

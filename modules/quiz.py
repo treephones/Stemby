@@ -5,7 +5,7 @@ from utils.webscrapingutils import get_page_soup
 flashcard_link_id = "https://quizlet.com/gb/"
 
 def clean_topic(topic):
-    return topic.strip().replace(" ", "-")
+    return topic.strip().replace(" ", "-").lower()
 
 async def get_topic_link(topic):
     for key in topics.keys():
