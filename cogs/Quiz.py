@@ -24,7 +24,7 @@ class Quiz(commands.Cog):
               f"\n\nFlashcard fetched from: \n[{link}]({link})"
         ans_txt = f"\n\n" \
               f"{question}\n\n**Answer**: \n```\n{answer}\n```" \
-              f"\n\nFlashcard fetched from: \n[{link}]({link})"
+              f"\nFlashcard fetched from: \n[{link}]({link})"
 
         msg = await ctx.send(embed=quick_embed(ctx, txt, title=f"**Flashcard for `{topic}`**:"))
         await msg.add_reaction('👀')
