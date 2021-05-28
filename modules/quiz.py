@@ -27,5 +27,12 @@ def get_quiz(topic_link):
     links = [link["href"] for link in bs.find_all("a", href=True) if flashcard_link_id in link["href"]]
     return choice(links)
 
-def get_question(quiz_link):
+def get_questions(quiz_link):
     bs = get_page_soup(quiz_link)
+    questions_text = [span.get_text() for span in bs.find_all("span", {"class": "TermText"})]
+    if len(questions_text)%2 == 0:
+        del questions_text[-1]
+    qa = [[], []]
+    for i in range(len(questions_text)):
+        qa[i%2].append(questions_text[i])
+    return list(zip(qa[0], qa[1]))
