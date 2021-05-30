@@ -29,7 +29,7 @@ class STEMbot(commands.Bot):
 
 def run():
     bot = STEMbot(
-        command_prefix=",",
+        command_prefix=commands.when_mentioned_or(","),
         status=discord.Status.online,
         activity=discord.Activity(type=discord.ActivityType.listening, name=',help'),
         help_command=None
