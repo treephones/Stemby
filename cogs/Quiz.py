@@ -13,8 +13,15 @@ class Quiz(commands.Cog):
     @commands.cooldown(2, 10, commands.BucketType.channel)
     async def quiz(self, ctx, *, topic):
         topic = quiz.clean_topic(topic)
-        link = await quiz.get_quiz(await quiz.get_topic_link(topic))
-        question, answer = choice(await quiz.get_questions(link))
+        try:
+            link = await quiz.get_quiz(await quiz.get_topic_link(topic))
+            question, answer = choice(await quiz.get_questions(link))
+        except quiz.TopicNotFoundException as e:
+            await ctx.send(embed=quick_embed(ctx, f"The topic `{e.entered}` could not be found. Could you have meant `{e.suggested}`?", False))
+            return
+        except Exception:
+            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Could not fetch flashcard. Please try again later.", False))
+            return
 
         def check(reaction, user):
             return user == ctx.message.author and str(reaction.emoji) == '👀'

@@ -1,26 +1,37 @@
 from random import choice
 from statics.quiz_topics import topics
-from utils.webscrapingutils import get_page_soup
+from utils.webscrapingutils import get_page_soup, str_diff
 
 flashcard_link_id = "https://quizlet.com/gb/"
+
+class TopicNotFoundException(Exception):
+    def __init__(self, entered, suggested):
+        self.entered = entered
+        self.suggested = suggested
 
 def clean_topic(topic):
     return topic.strip().replace(" ", "-").lower()
 
+#locally
 async def get_topic_link(topic):
+    diffs = []
     for key in topics.keys():
         if key == topic:
             rval1 = choice(list(topics[key].keys()))
             subject = choice(topics[key][rval1]['topics'])
             return topics[key][rval1]['link'].format(subject)
+        diffs.append((key, str_diff(topic, key)))
         for subkey in topics[key].keys():
             if subkey == topic:
                 subject = choice(topics[key][subkey]['topics'])
                 return topics[key][subkey]['link'].format(subject)
+            diffs.append((subkey, str_diff(topic, subkey)))
             for subtopic in topics[key][subkey]['topics']:
                 if subtopic == topic:
                     return topics[key][subkey]['link'].format(subtopic)
-    return None
+                diffs.append((subtopic, str_diff(topic, subtopic)))
+    suggested = min(diffs, key=lambda pair: pair[1])[0]
+    raise TopicNotFoundException(topic, suggested)
 
 async def get_quiz(topic_link):
     bs = await get_page_soup(topic_link)
