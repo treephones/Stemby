@@ -1,6 +1,7 @@
 import os
 import discord
 from discord.ext import commands
+from utils.embedutils import quick_embed
 
 class STEMbot(commands.Bot):
     def __init__(self, **kwargs):
@@ -24,10 +25,7 @@ class STEMbot(commands.Bot):
     async def on_message(self, message):
         if message.author.bot:
             return
-        try:
-            await self.process_commands(message)
-        except Exception:
-            await message.channel.send()
+        await self.process_commands(message)
 
 def run():
     bot = STEMbot(

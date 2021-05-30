@@ -36,10 +36,10 @@ class Quiz(commands.Cog):
         msg = await ctx.send(embed=quick_embed(ctx, txt, title=title))
         await msg.add_reaction('👀')
         try:
-            await self.bot.wait_for("reaction_add", timeout=60.0, check=check)
+            await self.bot.wait_for("reaction_add", timeout=60, check=check)
             await msg.edit(embed=quick_embed(ctx, ans_txt, title=title))
         except asyncio.TimeoutError:
-            await ctx.send(embed=quick_embed(ctx, f"Did not answer flashcard in time! Answer is: \n```\n{answer}\n```", False))
+            await msg.reply(embed=quick_embed(ctx, f"Did not answer flashcard in time! Answer is: \n```\n{answer}\n```", False))
             return
 
 def setup(bot):
