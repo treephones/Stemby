@@ -1,6 +1,7 @@
 from random import choice
 from statics.quiz_topics import topics
-from utils.webscrapingutils import get_page_soup, str_diff
+from utils.webscrapingutils import get_page_soup
+from utils.utils import levenshtein_distance
 
 flashcard_link_id = "https://quizlet.com/gb/"
 
@@ -20,16 +21,16 @@ async def get_topic_link(topic):
             rval1 = choice(list(topics[key].keys()))
             subject = choice(topics[key][rval1]['topics'])
             return topics[key][rval1]['link'].format(subject)
-        diffs.append((key, str_diff(topic, key)))
+        diffs.append((key, levenshtein_distance(topic, key)))
         for subkey in topics[key].keys():
             if subkey == topic:
                 subject = choice(topics[key][subkey]['topics'])
                 return topics[key][subkey]['link'].format(subject)
-            diffs.append((subkey, str_diff(topic, subkey)))
+            diffs.append((subkey, levenshtein_distance(topic, subkey)))
             for subtopic in topics[key][subkey]['topics']:
                 if subtopic == topic:
                     return topics[key][subkey]['link'].format(subtopic)
-                diffs.append((subtopic, str_diff(topic, subtopic)))
+                diffs.append((subtopic, levenshtein_distance(topic, subtopic)))
     suggested = min(diffs, key=lambda pair: pair[1])[0]
     raise TopicNotFoundException(topic, suggested)
 

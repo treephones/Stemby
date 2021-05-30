@@ -6,12 +6,3 @@ async def get_page_soup(link):
     request = Request(link, headers=user_agent)
     page_content = urlopen(request)
     return BeautifulSoup(page_content, "html.parser", from_encoding=page_content.info().get_param('charset'))
-
-def str_val(string):
-    n = 0
-    for char in string:
-        n += ord(char)
-    return n
-
-def str_diff(string1, string2):
-    return abs(str_val(string1) - str_val(string2))

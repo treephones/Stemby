@@ -24,7 +24,10 @@ class STEMbot(commands.Bot):
     async def on_message(self, message):
         if message.author.bot:
             return
-        await self.process_commands(message)
+        try:
+            await self.process_commands(message)
+        except Exception:
+            await message.channel.send()
 
 def run():
     bot = STEMbot(
