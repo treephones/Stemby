@@ -1,3 +1,4 @@
+import os
 import re
 from statics.quiz_topics import topics
 from modules.math_general import solve
@@ -13,5 +14,4 @@ from modules.quiz import get_topic_link, get_quiz
 #         for topic in topics[key][subkey]["topics"]:
 #             print(link.format(topic))
 
-expression = "2x = 2"
-print(solve(expression))
+print(os.path.abspath(os.getcwd())[:-5])

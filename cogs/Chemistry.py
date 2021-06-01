@@ -1,3 +1,5 @@
+import os
+import discord
 from discord.ext import commands
 import json
 from modules.chemistry import ChemistryFunctions
@@ -51,6 +53,14 @@ class Chemistry(commands.Cog):
         compounds["prods"] = sides[1].split("+")
         ans = self.chem.balance(compounds)
         await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
+
+    @commands.command(aliases=["pt", "periodic table"])
+    @commands.cooldown(1, 3, commands.BucketType.user)
+    async def periodic(self, ctx):
+        pt_path = f"{os.path.abspath(os.getcwd())}\statics\periodic_table_pic.jpg"
+        embed, file = quick_embed(ctx, "Periodic Table:"), discord.File(pt_path)
+        embed.set_image(url=f"attachment://periodic_table_pic.jpg")
+        await ctx.send(embed=embed, file=file)
 
 def setup(bot):
     bot.add_cog(Chemistry(bot))
