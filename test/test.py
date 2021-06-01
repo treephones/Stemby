@@ -1,5 +1,7 @@
+import re
 from statics.quiz_topics import topics
-from modules.quiz import get_topic_link, get_quiz, str_diff
+from modules.math_general import solve
+from modules.quiz import get_topic_link, get_quiz
 
 # quiz = get_quiz(get_topic_link("biology"))
 # print(quiz)
@@ -11,5 +13,5 @@ from modules.quiz import get_topic_link, get_quiz, str_diff
 #         for topic in topics[key][subkey]["topics"]:
 #             print(link.format(topic))
 
-print(str_diff("sciunce", "science"))
-print(str_diff("sciunce", "english"))
+expression = "2x = 2"
+print(solve(expression))

@@ -1,6 +1,8 @@
 import math
 import re
+import sympy
 from sympy.plotting import plot_implicit
+from sympy import Symbol, Eq
 from sympy.parsing.sympy_parser import parse_expr
 import quantities as q
 from quantulum3 import parser
@@ -59,6 +61,27 @@ async def evaluate(expression):
     except Exception:
         return ("Something went wrong!", False)
     return (ret, True)
+
+async def solve(expression):
+    try:
+        og_expression = expression
+        x = Symbol("x", real=True)
+        expression = expression.replace("^", "**")
+        matches = re.findall("\d+x", expression)
+        for match in matches:
+            expression = expression.replace(match, f"{match[:-1]}*{match[-1]}")
+        sides = expression.split("=")
+        l, r = parse_expr(sides[0], local_dict={"x": x}), parse_expr(sides[1], local_dict={"x": x})
+        ans = sympy.solve(Eq(l, r), x)
+        if len(ans) == 0:
+            return (f"There is no real solution for that system!", False)
+        else:
+            if len(ans) == 1:
+                return (f"Solved for x:\n```julia\n{og_expression}\n\nx = {ans[0]}\n```", True)
+            if len(ans) == 2:
+                return (f"Solved for x:\n```julia\n{og_expression}\n\nx = {ans[0]} OR {ans[1]}\n```", True)
+    except Exception:
+        return ("Something went wrong! Check the equation input and make sure to only use the variable x!", False)
 
 def graph(expression):
     l, r = expression.replace("^", "**").split("=")
