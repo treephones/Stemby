@@ -15,7 +15,9 @@ class Biology(commands.Cog):
         if len(genotype1) == len(genotype2):
             if len(genotype1) == 2 or len(genotype1) == 4:
                 path = await biology.punnett(genotype1, genotype2, len(genotype1), ctx.author.display_name)
-                await ctx.send(file=File(path))
+                embed, filename = quick_embed(ctx, "Generated Punnett Square:"), path[-12:]
+                embed.set_image(url=f"attachment://{filename}")
+                await ctx.send(embed=embed, file=File(path))
                 os.remove(path)
                 return
             await ctx.send(embed=quick_embed(ctx, "Something went wrong! Only do 2x2 or 4x4 punnett squares!", False))
