@@ -1,7 +1,7 @@
 import os
 import re
 from statics.quiz_topics import topics
-from modules.math_general import solve
+from modules.math_general import graph
 from modules.quiz import get_topic_link, get_quiz
 
 # quiz = get_quiz(get_topic_link("biology"))
@@ -14,4 +14,6 @@ from modules.quiz import get_topic_link, get_quiz
 #         for topic in topics[key][subkey]["topics"]:
 #             print(link.format(topic))
 
-print(os.path.abspath(os.getcwd())[:-5])
+expression = "y= 2x^2 + 34x - 34"
+nums = max(map(float, re.findall("[+-]?\d+(?:\.\d+)?", expression)))
+print(graph(expression))
