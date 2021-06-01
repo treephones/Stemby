@@ -26,5 +26,10 @@ class Math_general(commands.Cog):
         ans = await math_general.evaluate(expr)
         await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
 
+    @commands.command(aliases=["x", "findx"])
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def isolate(self, ctx, *, expr):
+        pass
+    
 def setup(bot):
     bot.add_cog(Math_general(bot))
