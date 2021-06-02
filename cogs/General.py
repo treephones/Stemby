@@ -34,5 +34,14 @@ class General(commands.Cog):
         except Exception:
             await ctx.send("Something went wrong! The min and max must be integers!", False)
 
+    @commands.command(aliases=["choice", "randomchoice"])
+    @commands.cooldown(1, 2, commands.BucketType.user)
+    async def choose(self, ctx, *, items):
+        try:
+            await ctx.send(
+                embed=quick_embed(ctx, f"```python\n{random.choice(items.split())}```", title="Randomly chose:"))
+        except Exception:
+            await ctx.send("Something went wrong! Check check the inputs!")
+
 def setup(bot):
     bot.add_cog(General(bot))
