@@ -13,9 +13,43 @@ class Memes(commands.Cog):
     @commands.cooldown(2, 15, commands.BucketType.channel)
     async def pepe(self, ctx):
         path = await save_attachment(ctx)
-        facereplace.pepe(path)
+        facereplace.meme(path, facereplace.Memes.PEPE)
         await ctx.send(file=File(path))
         os.remove(path)
+
+    @commands.command()
+    @commands.cooldown(2, 15, commands.BucketType.channel)
+    async def scream(self, ctx):
+        path = await save_attachment(ctx)
+        facereplace.meme(path, facereplace.Memes.SCREAM)
+        await ctx.send(file=File(path))
+        os.remove(path)
+
+    @commands.command()
+    @commands.cooldown(2, 15, commands.BucketType.channel)
+    async def troll(self, ctx):
+        path = await save_attachment(ctx)
+        facereplace.meme(path, facereplace.Memes.TROLL)
+        await ctx.send(file=File(path))
+        os.remove(path)
+
+    @commands.command()
+    @commands.cooldown(2, 15, commands.BucketType.channel)
+    async def keef(self, ctx):
+        path = await save_attachment(ctx)
+        facereplace.meme(path, facereplace.Memes.KEEF)
+        await ctx.send(file=File(path))
+        os.remove(path)
+
+    @commands.command()
+    @commands.cooldown(2, 15, commands.BucketType.channel)
+    async def obama(self, ctx):
+        path = await save_attachment(ctx)
+        facereplace.meme(path, facereplace.Memes.OBAMA)
+        await ctx.send(file=File(path))
+        os.remove(path)
+
+
 
 def setup(bot):
     bot.add_cog(Memes(bot))
