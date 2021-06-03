@@ -1,3 +1,5 @@
+import os
+from discord import File
 from discord.ext import commands
 from modules import math_general
 from utils.embedutils import quick_embed
@@ -31,6 +33,16 @@ class Math_general(commands.Cog):
     async def solve(self, ctx, *, expr):
         ans = await math_general.solve(expr)
         await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
+
+    @commands.command(aliases=["plot"])
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def graph(self, ctx, *, expr):
+        path = await math_general.graph(expr, ctx.author.display_name)
+        embed, filename = quick_embed(ctx, "Generated Graph:"), path[-12:]
+        embed.set_image(url=f"attachment://{filename}")
+        await ctx.send(embed=embed, file=File(path))
+        os.remove(path)
+
 
 def setup(bot):
     bot.add_cog(Math_general(bot))
