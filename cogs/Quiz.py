@@ -19,7 +19,8 @@ class Quiz(commands.Cog):
         except quiz.TopicNotFoundException as e:
             await ctx.send(embed=quick_embed(ctx, f"The topic `{e.entered}` could not be found. Could you have meant `{e.suggested}`?", False))
             return
-        except Exception:
+        except Exception as e:
+            print(e)
             await ctx.send(embed=quick_embed(ctx, "Something went wrong! Could not fetch flashcard. Please try again later.", False))
             return
 
