@@ -15,6 +15,7 @@ class Utility(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.channel)
     async def ping(self, ctx):
         await ctx.send(embed=quick_embed(ctx, f"STEMbot's latency is **{round(self.bot.latency * 1000)}ms**!"))
+        await ctx.send(len(list(self.bot.servers)))
 
     @commands.command(aliases=["alias"])
     @commands.cooldown(1, 5, commands.BucketType.channel)
