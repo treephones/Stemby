@@ -1,6 +1,7 @@
 import os
 import discord
 from discord.ext import commands
+import requests
 from utils.embedutils import quick_embed
 
 class STEMbot(commands.Bot):
@@ -12,9 +13,11 @@ class STEMbot(commands.Bot):
             help_command=kwargs.get("help_command")
         )
         self.app_info = None
+        self.runtimes = []
 
     async def on_ready(self):
         self.app_info = await self.application_info()
+        self.runtimes = requests.get("https://emkc.org/api/v2/piston/runtimes").json()
         print('-' * 11)
         print(f'Logged in as: {self.user.name}\n'
               f'discord.py version: {discord.__version__}\n'
