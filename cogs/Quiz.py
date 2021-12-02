@@ -12,16 +12,14 @@ class Quiz(commands.Cog):
     @commands.command(aliases=["quizme"])
     @commands.cooldown(2, 10, commands.BucketType.channel)
     async def quiz(self, ctx, *, topic):
-        topic = quiz.clean_topic(topic)
         try:
-            link = await quiz.get_quiz(await quiz.get_topic_link(topic))
-            question, answer = choice(await quiz.get_questions(link))
+            question, answer, link = await quiz.get_flashcard(topic)
         except quiz.TopicNotFoundException as e:
             await ctx.send(embed=quick_embed(ctx, f"The topic `{e.entered}` could not be found. Could you have meant `{e.suggested}`?", False))
             return
         except Exception as e:
             print(e)
-            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Could not fetch flashcard. Please try again later.", False))
+            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Could not fetch flashcard. Maybe try a different topic?", False))
             return
 
         def check(reaction, user):
