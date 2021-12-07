@@ -14,7 +14,7 @@ async def punnett(g1, g2, size, person):
         y_labels = [g2[0]+g2[2], g2[0]+g2[3], g2[1]+g2[2], g2[1]+g2[3]]
         for y_label in y_labels:
             offspring.append([sort_genotype([y_label[0], x_label[0], y_label[1], x_label[1]]) for x_label in x_labels])
-
+    plt.close()
     ps = plt.table(
         colLabels=x_labels,
         rowLabels=y_labels,
