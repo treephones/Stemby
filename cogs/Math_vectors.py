@@ -34,7 +34,7 @@ class Math_vectors(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["dot_product", "dot-product"])
+    @commands.command(aliases=["dotproduct"])
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def dot(self, ctx, *, vecs):
         try:
@@ -46,7 +46,7 @@ class Math_vectors(commands.Cog):
         except VectorInputFormatException as e:
             await ctx.send(embed=quick_embed(ctx, e.message, False))
 
-    @commands.command(aliases=["vproduct", "vectorproduct", "vmultiply"])
+    @commands.command(aliases=["vproduct", "vectorproduct", "vmultiply", "multiply"])
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def product(self, ctx, *, vecs):
         try:

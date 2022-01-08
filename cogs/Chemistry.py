@@ -54,7 +54,7 @@ class Chemistry(commands.Cog):
         ans = self.chem.balance(compounds)
         await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
 
-    @commands.command(aliases=["pt", "periodic table"])
+    @commands.command(aliases=["pt", "periodictable"])
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def periodic(self, ctx):
         pt_path = f"{os.path.abspath(os.getcwd())}\statics\periodic_table_pic.jpg"

@@ -18,6 +18,7 @@ class STEMbot(commands.Bot):
     async def on_ready(self):
         self.app_info = await self.application_info()
         self.runtimes = requests.get("https://emkc.org/api/v2/piston/runtimes").json()
+        await self.user.edit(username="Stemby")
         print('-' * 11)
         print(f'Logged in as: {self.user.name}\n'
               f'discord.py version: {discord.__version__}\n'
@@ -32,7 +33,7 @@ class STEMbot(commands.Bot):
 
 def run():
     bot = STEMbot(
-        command_prefix=commands.when_mentioned_or(","),
+        command_prefix=commands.when_mentioned_or(",,"),
         status=discord.Status.online,
         activity=discord.Activity(type=discord.ActivityType.listening, name=',help'),
         help_command=None

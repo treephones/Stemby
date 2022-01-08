@@ -34,4 +34,5 @@ class Physics(commands.Cog):
         await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
 
 def setup(bot):
-    bot.add_cog(Physics(bot))
+    pass
+    #bot.add_cog(Physics(bot))

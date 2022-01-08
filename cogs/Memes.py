@@ -52,4 +52,5 @@ class Memes(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Memes(bot))
+    pass
+    #bot.add_cog(Memes(bot))

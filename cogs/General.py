@@ -17,18 +17,18 @@ class General(commands.Cog):
             ans = await general.define(word)
             await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
 
-    @commands.command(aliases=["syn", "synonyms"])
-    @commands.cooldown(1, 2, commands.BucketType.user)
-    async def synonym(self, ctx, *, word):
-        if len(word.split()) > 1:
-            await ctx.send(embed=quick_embed(ctx, "This feature only gets synonyms for single word terms!", False))
-        else:
-            ans = await general.synonyms(word)
-            await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
+    # @commands.command(aliases=["syn", "synonyms"])
+    # @commands.cooldown(1, 2, commands.BucketType.user)
+    # async def synonym(self, ctx, *, word):
+    #     if len(word.split()) > 1:
+    #         await ctx.send(embed=quick_embed(ctx, "This feature only gets synonyms for single word terms!", False))
+    #     else:
+    #         ans = await general.synonyms(word)
+    #         await ctx.send(embed=quick_embed(ctx, ans[0], ans[1]))
 
     @commands.command(aliases=["rand", "randomnumber"])
     @commands.cooldown(1, 2, commands.BucketType.user)
-    async def random(self, ctx, min, max):
+    async def random(self, ctx, min=0, max=100):
         try:
             await ctx.send(embed=quick_embed(ctx, f"```python\n{random.randint(int(min), int(max))}```", title="Random Number:"))
         except Exception:
