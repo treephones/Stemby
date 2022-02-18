@@ -1,98 +1,84 @@
+import json
+import discord
 from discord.ext import commands
-from utils.embedutils import quick_embed
-from modules import code
+import aiohttp
+
 
 class Code(commands.Cog):
+    """Test your big brain code"""
 
-    def __init__(self, bot):
+    PISTON_API = "https://emkc.org/api/v2/piston/execute"
+
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
+        self.language_info = json.load(open(f"./statics/language_info.json"))
 
-    @commands.command(aliases=["python3"])
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def python(self, ctx, *, content):
-        content = content.replace("```python", "").replace("```py", "").replace("`", "")
-        #add lang verification
-        try:
-            ans = code.execute(content, "python", self.bot.runtimes)
-            await ctx.send(embed=quick_embed(ctx, f"Language: **{ans['language'].upper()}**\nVersion: **{ans['version']}**\n\nOutput:\n```{ans['run']['output']}```"))
-        except Exception:
-            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Check the input format of the code.", False))
+        self.timeout = aiohttp.ClientTimeout(total=10)
+        self.session = aiohttp.ClientSession(timeout=self.timeout)
 
-    @commands.command()
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def java(self, ctx, *, content):
-        content = content.replace("```java", "").replace("`", "")
-        # add lang verification
-        try:
-            ans = code.execute( content, "java", self.bot.runtimes)
-            await ctx.send(embed=quick_embed(ctx, f"Language: **{ans['language'].upper()}**\nVersion: **{ans['version']}**\n\nOutput:\n```{ans['run']['output']}```"))
-        except Exception:
-            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Check the input format of the code.", False))
+    def addcodecommands(self):
+        for lang in self.language_info:
 
-    @commands.command()
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def c(self, ctx, *, content):
-        content = content.replace("```c", "").replace("`", "")
-        # add lang verification
-        try:
-            ans = code.execute(content, "c", self.bot.runtimes)
-            await ctx.send(embed=quick_embed(ctx, f"Language: **{ans['language'].upper()}**\nVersion: **{ans['version']}**\n\nOutput:\n```{ans['run']['output']}```"))
-        except Exception:
-            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Check the input format of the code.", False))
+            @commands.command(
+                name=lang,
+                help=f"Executes your {self.language_info[lang]['name']} code.",
+                aliases=self.language_info[lang]["aliases"],
+            )
+            @commands.cooldown(5, 2.5, commands.BucketType.channel)
+            @commands.max_concurrency(3, commands.BucketType.default, wait=True)
+            @commands.bot_has_permissions(embed_links=True)
+            async def cmd(self, ctx, *, code: commands.clean_content):
+                await self.run_code(ctx, ctx.command.name, code)
 
-    @commands.command(aliases=["js"])
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def javascript(self, ctx, *, content):
-        content = content.replace("```js", "").replace("```javascript", "").replace("`", "")
-        # add lang verification
-        try:
-            ans = code.execute(content, "javascript", self.bot.runtimes)
-            await ctx.send(embed=quick_embed(ctx, f"Language: **{ans['language'].upper()}**\nVersion: **{ans['version']}**\n\nOutput:\n```{ans['run']['output']}```"))
-        except Exception:
-            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Check the input format of the code.", False))
+            cmd.cog = self
+            self.__cog_commands__ = self.__cog_commands__ + (cmd,)
+            self.bot.add_command(cmd)
 
-    @commands.command()
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def swift(self, ctx, *, content):
-        content = content.replace("```swift", "").replace("`", "")
-        # add lang verification
-        try:
-            ans = code.execute(content, "swift", self.bot.runtimes)
-            await ctx.send(embed=quick_embed(ctx,f"Language: **{ans['language'].upper()}**\nVersion: **{ans['version']}**\n\nOutput:\n```{ans['run']['output']}```"))
-        except Exception:
-            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Check the input format of the code.", False))
+    async def run_code(self, ctx: commands.Context, language: str, code: str):
+        data = {
+            "language": language,
+            "version": "*",
+            "files": [
+                {"content": code.replace("```", "").replace(f"```{language}", "")}
+            ],
+        }
 
-    @commands.command()
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def cpp(self, ctx, *, content):
-        content = content.replace("```cpp", "").replace("```c++", "").replace("`", "")
-        # add lang verification
-        try:
-            ans = code.execute(content, "c++", self.bot.runtimes)
-            await ctx.send(embed=quick_embed(ctx,f"Language: **{ans['language'].upper()}**\nVersion: **{ans['version']}**\n\nOutput:\n```{ans['run']['output']}```"))
-        except Exception:
-            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Check the input format of the code.", False))
+        r = None
+        async with self.session.post(self.PISTON_API, data=json.dumps(data)) as resp:
+            r = await resp.json()
 
-    @commands.command()
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def csharp(self, ctx, *, content):
-        content = content.replace("```c#", "").replace("```csharp", "").replace("`", "")
-        # add lang verification
-        try:
-            ans = code.execute(content, "csharp", self.bot.runtimes)
-            await ctx.send(embed=quick_embed(ctx,f"Language: **{ans['language'].upper()}**\nVersion: **{ans['version']}**\n\nOutput:\n```{ans['run']['output']}```"))
-        except Exception:
-            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Check the input format of the code.", False))
+        if r is None or "message" in r:
+            return await ctx.send("`Sorry, I couldn't run code at that moment`")
 
-    @commands.command()
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def ruby(self, ctx, *, content):
-        content = content.replace("```ruby", "").replace("`", "")
-        # add lang verification
-        try:
-            ans = code.execute(content, "ruby", self.bot.runtimes)
-            await ctx.send(embed=quick_embed(ctx,f"Language: **{ans['language'].upper()}**\nVersion: **{ans['version']}**\n\nOutput:\n```{ans['run']['output']}```"))
-        except Exception:
-            await ctx.send(embed=quick_embed(ctx, "Something went wrong! Check the input format of the code.", False))
+        output = (
+            r["run"]["output"]
+            if len(r["run"]["output"]) <= 1900
+            else r["run"]["output"][:1900] + " Exceded Character Limit!"
+        )
+
+        if output.replace(" ", "") == "":
+            output = "No Output!"
+
+        embed = (
+            discord.Embed(
+                description=f"Output:```\n{output}```",
+                color=discord.Color.red()
+                if len(r["run"]["stderr"]) > 0
+                else discord.Color.green(),
+            )
+            .set_author(
+                name=f"{ctx.author}'s Code",
+                icon_url=ctx.author.avatar.url,
+            )
+            .set_footer(
+                text=f"{self.language_info[r['language']]['name']} - {r['version']}",
+                icon_url=self.language_info[r["language"]]["logo"],
+            )
+        )
+        await ctx.reply(embed=embed, mention_author=False)
+
+
 def setup(bot):
-    bot.add_cog(Code(bot))
+    cog = Code(bot)
+    bot.add_cog(cog)
+    cog.addcodecommands()
